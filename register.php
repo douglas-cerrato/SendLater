@@ -73,7 +73,11 @@
             <input type="text" id="lname" name="lname" required>
             <label for="email">Email Address:</label>
             <input type="email" id="email" name="email" required>
-            <input type="submit" value="Register">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required="" style="width: 95%; padding: 10px;"><br><br>
+    	    <label for="repassword">Re-enter Password:</label>
+    	    <input type="password" id="repassword" name="repassword" required="" style="width: 95%; padding: 10px;"><br><br>
+	    <input type="submit" value="Register">
         </form>
     </div>
 <div class="footer">
