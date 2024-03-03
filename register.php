@@ -1,3 +1,26 @@
+<?php
+   require_once('db_connection.php');
+
+   if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        //TODO: late Check if this email is a valid email
+        $email = $_POST['email'];
+        $passwd = $_POST['password'];
+        $verify_passwd = $_POST['repassword'];
+
+        if ($passwd == $verify_passwd){
+            //TODO: Hash password and save it to the database
+            die("Passwords match: $passwd and $verify_passwd");
+        } else{
+            die("Passwords don't match: $passwd and $verify_passwd");
+        }
+   }
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +89,7 @@
 <body>
     <div class="container">
         <h1>User Registration</h1>
-        <form action="submit_registration.php" method="post">
+        <form action="register.php" method="post">
             <label for="fname">First Name:</label>
             <input type="text" id="fname" name="fname" required>
             <label for="lname">Last Name:</label>
@@ -77,7 +100,7 @@
             <input type="password" id="password" name="password" required="" style="width: 95%; padding: 10px;"><br><br>
     	    <label for="repassword">Re-enter Password:</label>
     	    <input type="password" id="repassword" name="repassword" required="" style="width: 95%; padding: 10px;"><br><br>
-	    <input type="submit" value="Register">
+	        <input type="submit" value="Register">
         </form>
     </div>
 <div class="footer">
