@@ -1,5 +1,11 @@
 <?php
+   require_once('db_connection.php');
 
+   $fname = "";
+   $lname = "";
+   $email = "";
+   $psswd = "";
+   $verifypsswd = "";
 
 
 ?>
