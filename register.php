@@ -37,6 +37,10 @@
                 die(" Error inserting data: " . $stmnt->error);
             }
 
+            // Close the statement and connection
+            $stmnt->close();
+            $conn->close();
+
         } else{
             //TODO: throw an error later in the page if this is set
             // to true. Basically saying that the passwords mismatch
