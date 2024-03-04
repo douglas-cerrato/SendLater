@@ -1,7 +1,15 @@
 <?php
-   require_once('db_connection.php');
+    require_once('db_connection.php');
 
-   if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
+    // Get database connection
+    $conn = getDBConnection();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
@@ -11,10 +19,30 @@
         $verify_passwd = $_POST['repassword'];
 
         if ($passwd == $verify_passwd){
-            //TODO: Hash password and save it to the database
-            die("Passwords match: $passwd and $verify_passwd");
+            $hashedPassword = password_hash($passwd, PASSWORD_BCRYPT);
+
+            // Creating SQL Query
+            $sql_query = "INSERT INTO user_info (email, password, first_name, last_name) VALUES (?,?,?,?)";
+
+            // Create a prepared statement
+            $stmnt = $conn->prepare($sql_query);
+
+            // Bind the parameters to the placeholders
+            $stmnt->bind_param("ssss",$email,$hashedPassword,$fname,$lname);
+            
+            // Execute the statement
+            if ($stmnt->execute()){
+                $accountCreated = true;
+            } else{
+                die(" Error inserting data: " . $stmnt->error);
+            }
+
         } else{
-            die("Passwords don't match: $passwd and $verify_passwd");
+            //TODO: throw an error later in the page if this is set
+            // to true. Basically saying that the passwords mismatch
+            // and that we could not add the user to the database
+            $mismatchedPasswords = true;
+            $accountCreated = false;
         }
    }
 ?>
