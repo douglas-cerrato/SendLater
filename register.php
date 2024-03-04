@@ -6,6 +6,9 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
+    $mismatchedPasswords = false;
+    $accountCreated = false;
+
     // Get database connection
     $conn = getDBConnection();
 
@@ -13,7 +16,6 @@
 
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
-        //TODO: late Check if this email is a valid email
         $email = $_POST['email'];
         $passwd = $_POST['password'];
         $verify_passwd = $_POST['repassword'];
@@ -42,11 +44,7 @@
             $conn->close();
 
         } else{
-            //TODO: throw an error later in the page if this is set
-            // to true. Basically saying that the passwords mismatch
-            // and that we could not add the user to the database
             $mismatchedPasswords = true;
-            $accountCreated = false;
         }
    }
 ?>
@@ -133,10 +131,16 @@
     	    <label for="repassword">Re-enter Password:</label>
     	    <input type="password" id="repassword" name="repassword" required="" style="width: 95%; padding: 10px;"><br><br>
 	        <input type="submit" value="Register">
+        <?php if($mismatchedPasswords){
+            echo '<p style="color: red;">Passwords don\'t match</p>';
+        }?>
+        <?php if($accountCreated){
+            header('Location: login.php');
+        }?>   
         </form>
     </div>
 <div class="footer">
-<p> SendLater is created by Doug Cerrato and Angel Portillo, we are supported by AutoSource. Privacy Policy. Customer Service. Copyrights reserved.
+<p> SendLater is created by Douglas Cerrato and Angel Portillo, we are supported by AutoSource. Privacy Policy. Customer Service. Copyrights reserved.
 </p>
 </div>
 </body>
