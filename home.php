@@ -147,8 +147,8 @@
         <div class="flex-container">
             <div>
         <h1 style="margin-top: 10px;margin-right: auto;height: 81.9px;width: 1px;">SendLater</h1>
-        <a href="#" class="btn" style="/*! padding-top: 015px; */width: 55px;padding-left: 20px;position: absolute;/*! margin-right: auto; */margin-left: auto;">Sign Up</a>
-        <a href="#" class="btn" style="width: 52px;margin-right: auto;position: absolute;padding-left: 20px;margin-left: 11%;">Login</a>
+        <a href="register.php" class="btn" style="/*! padding-top: 015px; */width: 55px;padding-left: 20px;position: absolute;/*! margin-right: auto; */margin-left: auto;">Sign Up</a>
+        <a href="login.php" class="btn" style="width: 52px;margin-right: auto;position: absolute;padding-left: 20px;margin-left: 11%;">Login</a>
         <h2 style="margin-bottom: -25px;">Features</h2>
         <ul>
             <li>Schedule emails to be sent at a later time.</li>
