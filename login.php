@@ -10,6 +10,13 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
+    // Check if user is not logged in
+    if (isset($_SESSION["user_id"])){
+        // Redirect to login page
+        header("Location: profile.php");
+        exit();
+    }
+
     // Get database connection
     $conn = getDBConnection();
 
