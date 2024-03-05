@@ -7,6 +7,9 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
+    // Declaring base variable
+    $error = false;
+
     // Database connection
     require_once('db_connection.php');
     $conn = getDBConnection();
@@ -28,9 +31,24 @@
         $message = htmlspecialchars($_POST['message']);
         $send_date = $_POST['send-date'];
         $send_time = $_POST['send-time'];
+        $user_id = $_SESSION["user_id"];
 
-        die("Send date: $send_date and Send Time: $send_time");
+        // Creating sql query
+        $sql = "INSERT INTO email_info (user_id, receipient_email, subject_line, email_contents, send_date, send_time)
+        VALUES (?,?,?,?,?,?)";
 
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bind_param("isssss", $user_id, $to, $subject, $message, $send_date, $send_time);
+        
+        // Execute the statement
+        if ($stmnt->execute()){
+            // Redirect to confirm.php if executed successfully
+            header("Location: confirm.php");
+            exit();
+        }else{
+            // Set error variable to true if there was an error
+            $error = true;
+        }
 
     }
 ?>
@@ -155,6 +173,10 @@
             <label for="send-time" >Time:</label> 
             <input type="text" id="send-time" name="send-time" placeholder="Select time" required><br><br>
         </div>
+        <?php if($error){
+            echo '<p style="color: red;">There was an error trying to send your email.</p>';
+        }
+        ?>
 
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
