@@ -10,9 +10,9 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    // Check if user is not logged in
+    // Check if user is logged in
     if (isset($_SESSION["user_id"])){
-        // Redirect to login page
+        // Redirect to profile page
         header("Location: profile.php");
         exit();
     }
