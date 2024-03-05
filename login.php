@@ -1,3 +1,51 @@
+<?php
+    // Grab database connection
+    require_once('db_connection.php');
+    
+    // Start session
+    session_start();
+
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
+    // Get database connection
+    $conn = getDBConnection();
+
+    // Declaring default variables
+    $invalidPassword = false;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            $user_email = $_POST['email'];
+            $user_password = $_POST['password'];
+
+            // Creating search query for our database
+            $sql = "SELECT * FROM user_info WHERE email = '$user_email'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0){
+                // User found, let's verify password
+                $row = $result->fetch_assoc();
+                $dbPassword = $row["password"];
+                if (password_verify($user_password, $dbPassword)){
+                    // Hashed passwords match, start session and redirect to dashboard
+                    $_SESSION["user_id"] = $row["id"];
+                    header("Location: profile.php");
+                    exit();
+                } else{
+                    // Passwords do not match
+                    $invalidPassword = true;
+                }
+            } else{
+                // User not found
+                header("Location: register.php");
+                exit();
+            }
+        $conn->close();
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +109,11 @@
             <input type="password" id="password" name="password" required>
             <button type="submit">Sign In</button>
         </form>
-        <a href="forgot_password.php" style="margin-left: -6%;">Forgot Password?</a>
+        <a href="reset.php" style="margin-left: -6%;">Forgot Password?</a>
+        <?php if($invalidPassword){
+            echo '<p style="color: red;margin-right:6%;">Invalid Password.</p>';
+        }
+        ?>
     </div>
 </body>
 
