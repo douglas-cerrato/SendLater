@@ -1,3 +1,39 @@
+<?php
+    // Start session
+    session_start();
+
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
+    // Database connection
+    require_once('db_connection.php');
+    $conn = getDBConnection();
+
+    // Check if user is not logged in
+    if (!isset($_SESSION["user_id"])){
+        // Redirect to login page
+        header("Location: login.php");
+        exit();
+    }
+
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        // Retrieve form data
+        $to = $_POST['to'];
+        // Construct subject line with first name and last name
+        $subject = $_SESSION["first_name"] . "-" . $_SESSION["last_name"].": ".$_POST['subject'];
+        // Encode message to keep its full format
+        $message = htmlspecialchars($_POST['message']);
+        $send_date = $_POST['send-date'];
+        $send_time = $_POST['send-time'];
+
+        die("Send date: $send_date and Send Time: $send_time");
+
+
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,7 +121,7 @@
         }
         .flatpickr-time {
             position: relative;
-            margin-left: 30%;
+            margin-left: 11%;
             display: flex;
         }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -97,30 +133,19 @@
         <div class="dropdown">
             <button class="dropbtn">Menu</button>
             <div class="dropdown-content">
-                <a href="#">Password Reset</a>
-                <a href="#">Logout</a>
+                <a href="reset.php">Password Reset</a>
+                <a href="logout.php">Logout</a>
             </div>
         </div>
         <h1>User Main Page</h1>
-	<form action="submit_profile.php" method="post">
+	<form action="profile.php" method="post">
         <div class="email-form">
             <label for="to">To:</label>
             <input type="text" id="to" name="to" style="width: 100%;" required pattern=".*@.*"><br><br>
-            <label for="cc">CC:</label>
-            <input type="text" id="cc" name="cc" style="width: 100%;" required><br><br>
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" style="width: 100%;" required><br><br>
             <label for="message">Message:</label><br>
             <textarea id="message" name="message" rows="4" cols="50" style="width: 100%; height: 110px;" required></textarea>
-        </div>
-        <div class="frequency">
-            <label for="frequency">Frequency:</label>
-            <select id="frequency" name="frequency">
-                <option value="once">Once</option>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-            </select>
         </div>
         <div class="date-picker">
             <label for="send-date">Date:</label>
@@ -131,18 +156,41 @@
             <input type="text" id="send-time" name="send-time" placeholder="Select time" required><br><br>
         </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    flatpickr("#send-time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 1,
-        placeholder: "Select send time",
-        appendTo: document.querySelector('.time-picker')
-    });
-</script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            // Function to update the send-time input
+            function updateTimeInput() {
+                const hourInput = document.querySelector('.flatpickr-hour');
+                const minuteInput = document.querySelector('.flatpickr-minute');
+
+                // Get the selected hour and minute
+                const selectedHour = hourInput.value.padStart(2, '0');
+                const selectedMinute = minuteInput.value.padStart(2, '0');
+
+                // Set the selected time in the input field
+                document.getElementById("send-time").value = selectedHour + ':' + selectedMinute;
+            }
+
+            // Initialize Flatpickr with onChange event
+            flatpickr("#send-time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                minuteIncrement: 1,
+                placeholder: "Select send time",
+                appendTo: document.querySelector('.time-picker'),
+                onChange: updateTimeInput // Call updateTimeInput function when time changes
+            });
+
+            // Listen for input event on hour and minute inputs
+            document.querySelector('.flatpickr-hour').addEventListener('input', updateTimeInput);
+            document.querySelector('.flatpickr-minute').addEventListener('input', updateTimeInput);
+        
+            // Call updateTimeInput function when the page loads to set the default time
+            window.addEventListener('load', updateTimeInput);        
+        </script>
+
         <div class="send-button">
             <input type="submit" value="Submit">
         </div>
