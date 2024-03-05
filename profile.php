@@ -28,7 +28,7 @@
         // Construct subject line with first name and last name
         $subject = $_SESSION["first_name"] . "-" . $_SESSION["last_name"].": ".$_POST['subject'];
         // Encode message to keep its full format
-        $message = htmlspecialchars($_POST['message']);
+        $message = $_POST['message'];
         $send_date = $_POST['send-date'];
         $send_time = $_POST['send-time'];
         $user_id = $_SESSION["user_id"];
