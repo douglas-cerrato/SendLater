@@ -151,14 +151,16 @@
         <a href="login.php" class="btn" style="width: 52px;margin-right: auto;position: absolute;padding-left: 20px;margin-left: 11%;">Login</a>
         <h2 style="margin-bottom: -25px;">Features</h2>
         <ul>
-            <li>Schedule emails to be sent at a later time.</li>
-            <li>Set recurring email schedules (daily, weekly, monthly).</li>
-            <li>Manage and edit scheduled emails.</li>
-            <li>Receive notifications for successfully sent emails.</li>
+            <li>Send emails to anyone you desire.</li>
+            <li>Emails can be scheduled to send at any desired date and time.</li>
+            <li>Send as many emails as you would like.</li>
+            <li>Reset your account password if you would like to change it.</li>
         </ul>
 	<h3>Coming Soon in 1.2.0</h3>
 	<ul>
 	    <li>Add attachments to emails.</li>
+        <li>Schedule reoccurring emails (daily, weekly and monthly).</li>
+        <li>Manage and edit scheduled emails.</li>
 	    <li>Additional features to personalize your profile.</li>
 	    <li>Store multiple signatures for any occasion.</li>
 	    <li>Error free emails with spelling, grammar, and syntax errors.</li>
