@@ -80,6 +80,8 @@
         .send-button {
             margin-top: 20px;
         }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr">
     </style>
 </head>
 <body>
@@ -118,10 +120,23 @@
             <label for="send-date">Date:</label>
             <input type="date" id="send-date" name="send-date">
         </div>
+<label for="send-time" style="margin-top: 14px; margin-left: -10%;">Time: ""<input type="text" id="send-time" name="send-time" required="" style="width: 10%; padding: 2px; margin-bottom: 5px; margin-left: 12%;" placeholder="Select time"><br><br>
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#send-time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 1,
+        placeholder: "Select send time"
+    });
+</script>
         <div class="send-button">
             <button type="submit">Send</button>
         </div>
     </div>
 </body>
 </html>
+
 
