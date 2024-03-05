@@ -16,7 +16,6 @@
 	    align-items: flex-start;
             max-width: 800px;
             margin: 0 auto;
-            /*! min-height: 90vh; */
             padding: 20px;
             background-color: #C0C0C0;
             border-radius: 5px;
