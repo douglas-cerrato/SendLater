@@ -80,6 +80,14 @@
         .send-button {
             margin-top: 20px;
         }
+        .time-picker {
+            margin-top: 20px;
+        }
+        .flatpickr-time {
+            position: relative;
+            margin-left: 30%;
+            display: flex;
+        }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr">
     </style>
@@ -101,7 +109,7 @@
             <label for="cc">CC:</label>
             <input type="text" id="cc" name="cc" style="width: 100%;"><br><br>
             <label for="from">From:</label>
-            <input type="text" id="from" name="from" value="user@example.com" readonly style="width: 100%;"><br><br>
+            <input type="text" id="from" name="from" value="user@example.com" style="width: 100%;"><br><br>
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" required="" style="width: 100%;"><br><br>
             <label for="message">Message:</label><br>
@@ -120,7 +128,11 @@
             <label for="send-date">Date:</label>
             <input type="date" id="send-date" name="send-date">
         </div>
-<label for="send-time" style="margin-top: 14px; margin-left: -10%;">Time: ""<input type="text" id="send-time" name="send-time" required="" style="width: 10%; padding: 2px; margin-bottom: 5px; margin-left: 12%;" placeholder="Select time"><br><br>
+        <div class="time-picker">
+            <label for="send-time" >Time:</label> 
+            <input type="text" id="send-time" name="send-time" required="" placeholder="Select time"><br><br>
+        </div>
+
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     flatpickr("#send-time", {
@@ -129,7 +141,8 @@
         dateFormat: "H:i",
         time_24hr: true,
         minuteIncrement: 1,
-        placeholder: "Select send time"
+        placeholder: "Select send time",
+        appendTo: document.querySelector('.time-picker')
     });
 </script>
         <div class="send-button">
