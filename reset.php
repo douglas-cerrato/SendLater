@@ -1,3 +1,65 @@
+<?php
+    // This is here to show us errors in our code in the sit has an issue
+    // with something server side
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+    
+    require_once('db_connection.php');
+    $conn = getDBConnection();
+
+    // Default variable values
+    $emailDoesntExist = false;
+    $wrongPassword = false;
+    $passwordsDontMatch = false;
+    $passwordHasBeenReset = false;
+    
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        $email = $_POST["email"];
+        $oldPassword = $_POST["old-password"];
+        $newPassword = $_POST["new-password"];
+        $confirmNewPassword = $_POST["confirm-new-password"];
+
+        // Query to check if the email exists
+        $emailCheckQuery = "SELECT * FROM user_info WHERE email = ?";
+        $stmnt = $conn->prepare($emailCheckQuery);
+        $stmnt->bind_param("s", $email);
+        $stmnt->execute();
+        $result = $stmnt->get_result();
+
+        // Check if the email exists
+        if ($result->num_rows == 0){
+            // Set variable to true if email doesn't exist
+            $emailDoesntExist = true;
+        } else{
+            // Fetch user data
+            $userData = $result->fetch_assoc();
+
+            // Verify old password
+            if (!password_verify($oldPassword, $userData['password'])){
+                // Set variable to true if old password doesn't match
+                $wrongPassword = true;
+            } else{
+                // Check if new password matches confirm new password
+                if ($newPassword != $confirmNewPassword){
+                    // Set variable to true if both passwords do not match
+                    $passwordsDontMatch = true;
+                } else{
+                    // Update password in database
+                    $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+                    $updateQuery = "UPDATE user_info SET password = ? WHERE email = ?";
+                    $updateStmnt = $conn->prepare($updateQuery);
+                    $updateStmnt->bind_param("ss", $hashedPassword, $email);
+                    $updateStmnt->execute();
+                    $passwordHasBeenReset = true;
+                }
+            }
+        }
+
+    }    
+
+    
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,7 +193,7 @@
 <body>
     <div class="container">
         <h1 style="margin-top: 30px;margin-right: auto;">Reset Password</h1>
-        <form action="submit_reset.php" method="post">
+        <form action="reset.php" method="post">
             <label for="email">Enter Email:</label>
             <input type="email" id="email" name="email" required="" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br><br>
             <label for="old-password">Old Password:</label>
@@ -140,6 +202,19 @@
             <input type="password" id="new-password" name="new-password" required="" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br><br>
             <label for="confirm-new-password">Re-enter New Password:</label>
             <input type="password" id="confirm-new-password" name="confirm-new-password" required="" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br><br>
+            <?php if($emailDoesntExist){
+                echo '<p style="color:red;">This email doesn\'t exist.</p>';
+            }
+            if($wrongPassword){
+                echo '<p style="color:red;">Password is incorrect.</p>';                
+            }
+            if($passwordsDontMatch){
+                echo '<p style="color:red;">Your new passwords don\'t match.</p>';
+            }
+            if($passwordHasBeenReset){
+                echo '<p style="color:green;">Your password has been succesfully reset.</p>';
+            }
+            ?>
             <div class="buttons">
                 <button type="submit" class="btn">Submit</button>
                 <button onclick="history.back()" class="btn">Back</button>
