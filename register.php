@@ -8,6 +8,7 @@
 
     $mismatchedPasswords = false;
     $accountCreated = false;
+    $emailAlreadyExists = false;
 
     // Get database connection
     $conn = getDBConnection();
@@ -30,13 +31,20 @@
             $stmnt = $conn->prepare($sql_query);
 
             // Bind the parameters to the placeholders
-            $stmnt->bind_param("ssss",$email,$hashedPassword,$fname,$lname);
-            
-            // Execute the statement
-            if ($stmnt->execute()){
+            $stmnt->bind_param("ssss", $email, $hashedPassword, $fname, $lname);
+
+            try {
+                // Execute the statement
+                $stmnt->execute();
                 $accountCreated = true;
-            } else{
-                die(" Error inserting data: " . $stmnt->error);
+            } catch (Exception $e) {
+                // Check if the error message contains the duplicate entry error code
+                if (strpos($e->getMessage(), "Duplicate entry") !== false) {
+                    $emailAlreadyExists = true;
+                } else {
+                    // Other errors
+                    die("Error inserting data: " . $e->getMessage());
+                }
             }
 
             // Close the statement and connection
@@ -133,7 +141,11 @@
 	        <input type="submit" value="Register">
         <?php if($mismatchedPasswords){
             echo '<p style="color: red;">Passwords don\'t match</p>';
-        }?>
+        }
+        if($emailAlreadyExists){
+            echo '<p style="color: red;">Email already exists</p>';
+        }
+        ?>
         <?php if($accountCreated){
             header('Location: login.php');
         }?>   
