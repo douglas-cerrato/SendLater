@@ -68,7 +68,7 @@
 	    text-decoration: underline;
 	}
         .email-form {
-            width: 50%;
+            width: 100%;
             margin-top: 20px;
         }
         .frequency {
@@ -105,15 +105,13 @@
 	<form action="submit_profile.php" method="post">
         <div class="email-form">
             <label for="to">To:</label>
-            <input type="text" id="to" name="to" style="width: 100%;" required><br><br>
+            <input type="text" id="to" name="to" style="width: 100%;" required pattern=".*@.*"><br><br>
             <label for="cc">CC:</label>
             <input type="text" id="cc" name="cc" style="width: 100%;" required><br><br>
-            <label for="from">From:</label>
-            <input type="text" id="from" name="from" style="width: 100%;" required><br><br>
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" style="width: 100%;" required><br><br>
             <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" style="width: 100%;" required></textarea>
+            <textarea id="message" name="message" rows="4" cols="50" style="width: 100%; height: 110px;" required></textarea>
         </div>
         <div class="frequency">
             <label for="frequency">Frequency:</label>
@@ -152,6 +150,3 @@
     </div>
 </body>
 </html>
-
-
-
