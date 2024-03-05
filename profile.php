@@ -97,9 +97,8 @@
         <div class="dropdown">
             <button class="dropbtn">Menu</button>
             <div class="dropdown-content">
+                <a href="#">Password Reset</a>
                 <a href="#">Logout</a>
-                <a href="#">Settings</a>
-                <a href="#">Account</a>
             </div>
         </div>
         <h1>User Main Page</h1>
@@ -109,7 +108,7 @@
             <label for="cc">CC:</label>
             <input type="text" id="cc" name="cc" style="width: 100%;"><br><br>
             <label for="from">From:</label>
-            <input type="text" id="from" name="from" value="user@example.com" style="width: 100%;"><br><br>
+            <input type="text" id="from" name="from" style="width: 100%;"><br><br>
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" required="" style="width: 100%;"><br><br>
             <label for="message">Message:</label><br>
@@ -151,5 +150,4 @@
     </div>
 </body>
 </html>
-
 
