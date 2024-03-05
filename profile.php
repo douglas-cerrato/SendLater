@@ -102,17 +102,18 @@
             </div>
         </div>
         <h1>User Main Page</h1>
+	<form action="submit_profile.php" method="post">
         <div class="email-form">
             <label for="to">To:</label>
-            <input type="text" id="to" name="to" required="" style="width: 100%;"><br><br>
+            <input type="text" id="to" name="to" style="width: 100%;" required><br><br>
             <label for="cc">CC:</label>
-            <input type="text" id="cc" name="cc" style="width: 100%;"><br><br>
+            <input type="text" id="cc" name="cc" style="width: 100%;" required><br><br>
             <label for="from">From:</label>
-            <input type="text" id="from" name="from" style="width: 100%;"><br><br>
+            <input type="text" id="from" name="from" style="width: 100%;" required><br><br>
             <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" required="" style="width: 100%;"><br><br>
+            <input type="text" id="subject" name="subject" style="width: 100%;" required><br><br>
             <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" required="" style="width: 100%;"></textarea>
+            <textarea id="message" name="message" rows="4" cols="50" style="width: 100%;" required></textarea>
         </div>
         <div class="frequency">
             <label for="frequency">Frequency:</label>
@@ -125,11 +126,11 @@
         </div>
         <div class="date-picker">
             <label for="send-date">Date:</label>
-            <input type="date" id="send-date" name="send-date">
+            <input type="date" id="send-date" name="send-date" required>
         </div>
         <div class="time-picker">
             <label for="send-time" >Time:</label> 
-            <input type="text" id="send-time" name="send-time" required="" placeholder="Select time"><br><br>
+            <input type="text" id="send-time" name="send-time" placeholder="Select time" required><br><br>
         </div>
 
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -145,9 +146,12 @@
     });
 </script>
         <div class="send-button">
-            <button type="submit">Send</button>
+            <input type="submit" value="Submit">
         </div>
+	</form>
     </div>
 </body>
 </html>
+
+
 
