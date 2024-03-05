@@ -52,8 +52,8 @@
         <h1>Email Confirmation</h1>
         <div class="message">Your message was successfully sent.</div>
         <div class="buttons">
-            <a href="#" class="btn">Return</a>
-            <a href="#" class="btn">Logout</a>
+            <a href="profile.php" class="btn">Return</a>
+            <a href="logout.php" class="btn">Logout</a>
         </div>
     </div>
 </body>
