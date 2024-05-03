@@ -16,7 +16,7 @@ $current_date = $current_time->format('Y-m-d');
 $current_time = $current_time->format('H:i');
 $current_time = $current_time . ":00";
 
-echo "Current Date: " . $current_date . "Current Time: " . $current_time;
+//echo "Current Date: " . $current_date . "Current Time: " . $current_time;
 
 // Query to retrieve email information and associated times
 $query = "SELECT * FROM email_info";
@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
                         'subject' => $subject_line // Use $subject_line variable from the database
                     ]
                 ],
-                'from' => ['email' => 'douglasc@douglascerrato2.digital', 'name' => 'SendLater'],
+                'from' => ['email' => 'sendgrid@douglascerrato2.digital', 'name' => 'SendLater'],
                 'content' => [
                     [
                         'type' => 'text/plain',
